@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:root {
+  --font-family: "Montserrat", sans-serif;
+  --primary: #7e22ce;
+  --dark: #3b0764;
+  --light: #e9d5ff;
+  --text-color: #222;
+  --gray-700: #2c3a47;
+  --gray-100: #dfe6e9;
+  --success: #22c55e;
+  --danger: #dc2626;
+  --border: 1px solid var(--gray-100);
+  --radius: 24px;
+}
+
+body {
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  color: var(--text-color);
+}
+
+.card {
+  padding: 24px;
+  border-radius: var(--radius);
+  border: var(--border);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.active-item {
+  background-color: var(--light);
+  border-radius: var(--radius);
+}
+
+.btn {
+  font-weight: 500;
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  transition: background-color 0.4s;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--dark);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-16 {
+  gap: 16px;
+}
+
+.text-sm {
+  font-size: 0.75rem;
+}
+
+.text-lg {
+  font-size: 1.5rem;
+}
+
+.text-semibold {
+  font-weight: 500;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.px-12 {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+.py-6 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.w-half {
+  width: 50%;
+}
+
+/*# sourceMappingURL=styles.css.map */

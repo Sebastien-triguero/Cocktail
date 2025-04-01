@@ -1,13 +1,22 @@
-import {Component} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {Cocktail} from '../../../shared/interfaces';
 
 @Component({
   selector: 'app-cocktail-details',
   imports: [],
   template: `
-    <img class="mb-20" [src]="cocktail.imageUrl" alt=""/>
-    <h3 class="mb-20"> {{ cocktail.name }}</h3>
-    <p class="mb-20"> {{ cocktail.description }}</p>
+    @let c = cocktail();
+
+    <div>
+      <img class="mb-20" [src]="c.imageUrl" alt=""/>
+    </div>
+    <h3 class="mb-20"> {{ c.name }}</h3>
+    <p class="mb-20"> {{ c.description }}</p>
+    <ul class="mb-20">
+      @for (ingredient of c.ingredients; track $index) {
+        <li class="my-2"> {{ ingredient }}</li>
+      }
+    </ul>
     <div>
       <button class="btn btn-primary">Ajouter un cocktail</button>
     </div>
@@ -17,15 +26,20 @@ import {Cocktail} from '../../../shared/interfaces';
       display: flex;
       flex-direction: column;
     }
+
+    img {
+      max-height: 300px;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
   `
 })
 export class CocktailDetailsComponent {
-  cocktail: Cocktail = {
-    imageUrl: 'https://static.750g.com/images/1200-675/dfe52623942a8b2e6b4f1e1715a42570/servez-et-degustez.jpg',
-    name: 'Mojito',
-    description: 'Le mojito est un cocktail classique cubain, idéal pour les moments de détente. ' +
-      'Composé de rhum blanc, de feuilles de menthe fraîche, de jus de citron vert, de sucre, d\'eau gazeuse et de glace pilée, il offre un ' +
-      'équilibre parfait entre fraîcheur, acidité et douceur, avec des arômes rafraîchissants et tropicaux.',
-  }
+  cocktail = input.required<Cocktail>();
 
 }

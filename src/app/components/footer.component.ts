@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
   `,
   styles: `
   :host {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;

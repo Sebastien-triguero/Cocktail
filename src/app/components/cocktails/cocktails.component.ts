@@ -1,59 +1,66 @@
-import {Component, computed, effect, signal} from '@angular/core';
-import {CocktailsListComponent} from './components/cocktails-list.component';
-import {CocktailDetailsComponent} from './components/cocktail-details.component';
-import {cocktails} from '../../shared/data';
-import {Cocktail} from '../../shared/interfaces';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CocktailsListComponent } from './components/cocktails-list.component';
+import { CocktailDetailsComponent } from './components/cocktail-details.component';
+import {CartService} from '../../shared/services/cart.service';
+import {CocktailsService} from '../../shared/services/cocktails.service';
 
 @Component({
   selector: 'app-cocktails',
-  imports: [
-    CocktailsListComponent,
-    CocktailDetailsComponent
-  ],
+  imports: [CocktailsListComponent, CocktailDetailsComponent],
   template: `
     <app-cocktails-list
-      [selectedCocktailName]="selectedCocktailName()"
+      [(selectedCocktailId)]="selectedCocktailId"
+      [likedCocktailIds]="likedCocktailIds()"
+      (likecocktail)="likeCocktail($event)"
+      (unlikecocktail)="unlikeCocktail($event)"
+      [cocktails]="cocktails()"
       class="w-half xs-w-full card"
-      (selectCocktail)="selectCocktail($event)"
-      [cocktails]="cocktails()"/>
-    <app-cocktail-details class="w-half xs-w-full card" [cocktail]="selectedCocktail()"/>
+    />
+    @let sc = selectedCocktail(); @if (sc) {
+      <app-cocktail-details
+        (likecocktail)="likeCocktail($event)"
+        (unlikecocktail)="unlikeCocktail($event)"
+        [cocktail]="sc"
+        [isLiked]="selectedCocktailLiked()"
+        class="w-half xs-w-full card"
+      />
+    }
   `,
   styles: `
     :host {
       display: flex;
-      gap: 24px;
+      gap:24px;
       padding: 24px;
       @media screen and (max-width: 820px) {
         flex-direction: column;
       }
     }
-  `
+  `,
 })
 export class CocktailsComponent {
-  //Ce signal contient la liste des cocktails importée depuis les données partagées (app/shared/data).
-  // En l'appelant avec cocktails(), vous obtenez la valeur actuelle de la liste des cocktails.
-  cocktails = signal<Cocktail[]>(cocktails);
+  cocktailsService = inject(CocktailsService);
+  cartService = inject(CartService);
 
-  //Ce signal contient le cocktail actuellement sélectionné. Il est initialisé avec le premier cocktail de la liste.
-  // Ce signal est mis à jour dans la méthode selectCocktail pour refléter le cocktail sélectionné par l'utilisateur.
-  selectedCocktail = signal<Cocktail>(this.cocktails()[0]);
+  cocktails = computed(
+    () => this.cocktailsService.cocktailsResource.value() || []
+  );
 
-  //Ce computed dérive la propriété name du cocktail actuellement sélectionné (selectedCocktail).
-  //Si le signal selectedCocktail change, selectedCocktailName se met automatiquement à jour pour refléter le nouveau nom.
-  selectedCocktailName = computed(() => this.selectedCocktail().name);
+  selectedCocktailId = signal<string | null>(null);
+  selectedCocktail = computed(() =>
+    this.cocktails().find(({ _id }) => _id === this.selectedCocktailId())
+  );
+  selectedCocktailLiked = computed(() => {
+    const selectedCocktailId = this.selectedCocktailId();
+    return selectedCocktailId
+      ? this.likedCocktailIds().includes(selectedCocktailId)
+      : false;
+  });
 
-  selectCocktail(cocktailName: string) {
-    console.log(cocktailName);
-    const newCocktail = this.cocktails().find(({name}) => name === cocktailName);
-    if (newCocktail) {
-      this.selectedCocktail.set(newCocktail);
-    }
+  likedCocktailIds = computed(() => this.cartService.likedCocktailIds());
+  likeCocktail(cocktailId: string) {
+    this.cartService.likeCocktail(cocktailId);
   }
-
-  constructor() {
-    effect(() => {
-      console.log(this.selectedCocktail);
-    });
+  unlikeCocktail(cocktailId: string) {
+    this.cartService.unlikeCocktail(cocktailId);
   }
-
 }

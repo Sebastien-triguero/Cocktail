@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {Cocktail} from '../../../shared/interfaces';
+import { Cocktail } from 'app/shared/interfaces';
 
 @Component({
   selector: 'app-cocktails-list',
@@ -36,13 +36,12 @@ import {Cocktail} from '../../../shared/interfaces';
         <h3 class="flex">
           <span class="flex-auto">{{ cocktail.name }}</span>
           @if (likedIds.includes(cocktail._id)) {
-            <span> &#10084;</span>
+          <span> &#10084;</span>
           }
         </h3>
       </li>
-    }
+      }
     </ul>
-    <button class="btn btn-primary">Ajouter un cocktail</button>
   `,
   styles: `li:hover { cursor:pointer; background-color: var(--light); transition: all 0.4s } `,
   host: {

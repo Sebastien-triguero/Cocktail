@@ -1,8 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CocktailsListComponent } from './components/cocktails-list.component';
 import { CocktailDetailsComponent } from './components/cocktail-details.component';
-import {CartService} from '../../shared/services/cart.service';
-import {CocktailsService} from '../../shared/services/cocktails.service';
+import { CocktailsService } from '../../shared/services/cocktails.service';
+import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-cocktails',
@@ -17,17 +17,19 @@ import {CocktailsService} from '../../shared/services/cocktails.service';
       class="w-half xs-w-full card"
     />
     @let sc = selectedCocktail(); @if (sc) {
-      <app-cocktail-details
-        (likecocktail)="likeCocktail($event)"
-        (unlikecocktail)="unlikeCocktail($event)"
-        [cocktail]="sc"
-        [isLiked]="selectedCocktailLiked()"
-        class="w-half xs-w-full card"
-      />
+    <app-cocktail-details
+      (likecocktail)="likeCocktail($event)"
+      (unlikecocktail)="unlikeCocktail($event)"
+      (addIngredients)="addIngredients($event)"
+      [cocktail]="sc"
+      [isLiked]="selectedCocktailLiked()"
+      class="w-half xs-w-full card"
+    />
     }
   `,
   styles: `
     :host {
+      flex: 1 1 auto;
       display: flex;
       gap:24px;
       padding: 24px;
@@ -38,8 +40,8 @@ import {CocktailsService} from '../../shared/services/cocktails.service';
   `,
 })
 export class CocktailsComponent {
-  cocktailsService = inject(CocktailsService);
-  cartService = inject(CartService);
+  private cocktailsService = inject(CocktailsService);
+  private cartService = inject(CartService);
 
   cocktails = computed(
     () => this.cocktailsService.cocktailsResource.value() || []
@@ -62,5 +64,8 @@ export class CocktailsComponent {
   }
   unlikeCocktail(cocktailId: string) {
     this.cartService.unlikeCocktail(cocktailId);
+  }
+  addIngredients(ingredients: string[]) {
+    this.cartService.addIngredients(ingredients);
   }
 }

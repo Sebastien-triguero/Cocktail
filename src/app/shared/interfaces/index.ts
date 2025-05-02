@@ -1,1 +1,1 @@
-export * from './cocktail.interface'
+export * from './cocktail.interface';

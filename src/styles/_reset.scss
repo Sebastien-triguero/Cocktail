@@ -2,30 +2,36 @@ body {
   margin: 0;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin: 0;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
-ul{
+ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-img{
+img {
   max-width: 100%;
   border-radius: var(--radius);
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
+  padding: 6px 12px;
+  display: inline-block;
 }
 
-a:hover{
+a:hover {
   text-decoration: underline;
 }

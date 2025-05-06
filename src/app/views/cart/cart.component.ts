@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { CartIngredientsListComponent } from './components/cart-ingredients-list.component';
-import { CartService } from '../../shared/services/cart.service';
+import { CartService } from 'app/shared/services/cart.service';
 
 @Component({
   selector: 'app-cart',
